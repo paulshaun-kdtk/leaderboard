@@ -1,0 +1,10 @@
+.appContainer{
+    justify-content: space-evenly;
+}
+
+
+.additionForm > form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
