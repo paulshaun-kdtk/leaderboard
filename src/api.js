@@ -1,25 +1,5 @@
-// fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
-//   method: 'POST',
-//   headers: {
-//     'Content-Type': 'application/json'
-//   },
-//   body: JSON.stringify({
-//     name: 'Soccer LeadorBoard'
-//   })
-// })
-//   .then(response => response.json())
-//   .then(data => {
-//     const uniqueID = data.result.match(/ID: (\w+)/)[1]; // Extracting the ID from the response using regex
-//     console.log('Received unique ID:', uniqueID);
-//   })
-//   .catch(error => {
-//     console.error('Error:', error);
-//   });
-
-
 const form = document.getElementById('form');
-form.addEventListener('submit', submitForm);
-let gameId = ''
+let gameId = '';
 
 function submitForm(event) {
   event.preventDefault();
@@ -30,76 +10,75 @@ function submitForm(event) {
   const data = {
     name: nameInput.value,
     score: scoreInput.value,
-    user: 'John Doe' 
+    user: 'John Doe',
   };
 
   fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      name: 'Soccer LeadorBoard'
+      name: 'Soccer LeadorBoard',
+    }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      const id = data.result.match(/ID: (\w+)/)[1];
+      gameId = id;
+      return id;
     })
-  })
-  .then(response => response.json())
-  .then(data => {
-    const id = data.result.match(/ID: (\w+)/)[1];
-    gameId = id; 
-    return id;
-  })
-  .then(id => {
+    .then((id) => {
       fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores`, {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data)
+        body: JSON.stringify(data),
       })
-        .then(response => response.json())
-        .then(result => {
+        .then((response) => response.json())
+        .then((result) => {
           console.log('Score posted successfully:', result);
         })
-        .catch(error => {
+        .catch((error) => {
           console.error('Error posting score:', error);
           return alert('something went wrong');
         });
     })
-    .catch(error => {
+    .catch((error) => {
       console.error('Error:', error);
     });
 }
 
-
-    // display data
+// display data
 
 const dynamicDisplay = document.getElementById('dynamicDisplay');
-const refreshButton = document.getElementById('refresh')
-
+const refreshButton = document.getElementById('refresh');
 
 const refreshScores = () => {
-    const id = gameId; // Assign the gameId value to the id variable
-  
-    fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores`)
-      .then(response => response.json())
-      .then(data => {
-        console.log('Received scores:', data);
-        displayScores(data.result);
-      })
-      .catch(error => {
-        console.error('Error fetching scores:', error);
-      });
-  }
+  const id = gameId; // Assign the gameId value to the id variable
 
-
-  function displayScores(scores) {
-    dynamicDisplay.innerHTML = ''; 
-
-    scores.forEach(score => {
-      const scoreElement = document.createElement('div');
-      scoreElement.innerHTML = `${score.user}: ${score.score}`;
-      dynamicDisplay.appendChild(scoreElement);
+  fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores`)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log('Received scores:', data);
+      displayScores(data.result);
+    })
+    .catch((error) => {
+      console.error('Error fetching scores:', error);
     });
-  }
+};
+
+function displayScores(scores) {
+  dynamicDisplay.innerHTML = '';
+
+  scores.forEach((score) => {
+    const scoreElement = document.createElement('div');
+    scoreElement.innerHTML = `${score.user}: ${score.score}`;
+    dynamicDisplay.appendChild(scoreElement); `  score.user}: ${score.score}`;
+    dynamicDisplay.appendChild(scoreElement);
+  });
+}
 
 refreshButton.addEventListener('click', refreshScores);
+form.addEventListener('submit', submitForm);
