@@ -1,7 +1,7 @@
 const form = document.getElementById('form');
 const gameId = localStorage.getItem('gameId');
 
-async function submitForm(event) {
+const submitForm = async (event) => {
   event.preventDefault();
 
   const nameInput = document.getElementById('name');
@@ -42,7 +42,7 @@ async function submitForm(event) {
   } catch (error) {
     alert('Something went wrong');
   }
-}
+};
 
 // Display data
 
@@ -60,7 +60,7 @@ const refreshScores = async () => {
   }
 };
 
-function displayScores(scores) {
+const displayScores = (scores) => {
   dynamicDisplay.innerHTML = '';
 
   scores.forEach((score) => {
@@ -68,7 +68,7 @@ function displayScores(scores) {
     scoreElement.innerHTML = `${score.user}: ${score.score}`;
     dynamicDisplay.appendChild(scoreElement);
   });
-}
+};
 
 refreshButton.addEventListener('click', refreshScores);
 form.addEventListener('submit', submitForm);
