@@ -1,5 +1,5 @@
 const form = document.getElementById('form');
-let gameId = '';
+const gameId = localStorage.getItem('gameId');
 
 async function submitForm(event) {
   event.preventDefault();
@@ -8,38 +8,38 @@ async function submitForm(event) {
   const scoreInput = document.getElementById('score');
 
   const data = {
-    name: nameInput.value,
     score: scoreInput.value,
-    user: 'John Doe',
+    user: nameInput.value,
   };
 
   try {
-    const response = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        name: 'Soccer LeadorBoard',
-      }),
-    });
+    if (!gameId) {
+      const createResponse = await fetch('https://us-central1-js-capstone-backend.cloudfunctions.net/api/games', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          name: 'Soccer LeadorBoard',
+        }),
+      });
 
-    const responseData = await response.json();
-    const id = responseData.result.match(/ID: (\w+)/)[1];
-    gameId = id;
+      const createData = await createResponse.json();
+      const [, gameId] = createData.result.match(/ID: (\w+)/);
+      localStorage.setItem('gameId', gameId);
+    }
 
-    const scoresResponse = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores`, {
+    const scoresResponse = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameId}/scores`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(data),
     });
+    await scoresResponse.json();
 
-    const result = await scoresResponse.json();
-    console.log('Score posted successfully:', result);
+    alert('score posted successfully');
   } catch (error) {
-    console.error('Error:', error);
     alert('Something went wrong');
   }
 }
@@ -50,15 +50,13 @@ const dynamicDisplay = document.getElementById('dynamicDisplay');
 const refreshButton = document.getElementById('refresh');
 
 const refreshScores = async () => {
-  const id = gameId;
-
   try {
-    const response = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${id}/scores`);
+    const response = await fetch(`https://us-central1-js-capstone-backend.cloudfunctions.net/api/games/${gameId}/scores`);
     const data = await response.json();
-    console.log('Received scores:', data);
+    alert('Received scores:', data);
     displayScores(data.result);
   } catch (error) {
-    console.error('Error fetching scores:', error);
+    alert('Error fetching scores:', error);
   }
 };
 
