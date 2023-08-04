@@ -1,3 +1,7 @@
+body {
+  background-image: radial-gradient(circle, #212919, #14251f, #121f21, #15191c, #141414);
+}
+
 .appContainer {
   justify-content: space-evenly;
 }
@@ -6,4 +10,9 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+
+.LeaderBoard {
+  display: flex;
+  justify-content: center;
 }
