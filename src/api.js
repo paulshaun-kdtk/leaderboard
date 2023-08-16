@@ -73,5 +73,4 @@ const displayScores = (scores) => {
 refreshButton.addEventListener('click', refreshScores);
 form.addEventListener('submit', submitForm);
 
-
-//git branch --set-upstream-to dev feature
+// git branch --set-upstream-to dev feature

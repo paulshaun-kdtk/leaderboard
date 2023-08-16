@@ -60,23 +60,60 @@ The app is built using Webpack as a bundler.
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 💻 Getting Started <a name="getting-started"></a>
+
 To get a local copy up and running, follow these steps.
-- Open the index.html with a web browser (Chrome, Firefox, Safari...)
 
 ### Prerequisites
-In order to run this project you need:
-- A web browser (Chrome, Firefox, Safari, Edge...)
-<!--
-Example command:
 
-```sh
- gem install rails
-```
- -->
+In order to run this project you need the following tools:
+- Node.js in your computer
+- IDE(e.g.: Vscode,...)
+- Terminal
 
 ### Setup
-- Clone the repository to desired directory on local computer
-> `git clone https://github.com/wacoo/Awesome-Books.git`
+
+Clone this repository to your desired folder by running the following commands in your terminal:
+
+```sh
+  cd your-prefered-folder-name
+  
+  git clone https://github.com/paulshaun-kdtk/leaderboard.git
+```
+
+### Install
+
+- Install this project with:
+
+```sh
+  cd https://github.com/paulshaun-kdtk/leaderboard
+
+  npm install or npm i
+```
+
+- Run an optimized build for prodction:
+```
+  npm run build
+```
+
+### Usage
+
+To run the project, execute the following command:
+
+```sh
+  npm start
+
+```
+
+### Run tests
+
+To run tests, run the following command:
+
+```sh
+  npm run test
+```
+.
+.
+
 
 ## 👥 Author <a name="authors"></a>
 - Instagram: [@_shaun_s](https://www.instagram.com/_.shaun.s_/)
@@ -141,3 +178,5 @@ If you like my work, please support me by following me and my work @ twitter on:
 ## 📝 License <a name="license"></a>
 
 This project is [MIT](./MIT.md) licensed.
+
+
